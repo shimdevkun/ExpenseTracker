@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Initializer\ExpenseTrackerInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\Category.cs" />

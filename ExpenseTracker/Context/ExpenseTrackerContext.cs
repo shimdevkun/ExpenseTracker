@@ -1,4 +1,5 @@
-﻿using ExpenseTracker.Models;
+﻿using ExpenseTracker.Initializer;
+using ExpenseTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +13,7 @@ namespace ExpenseTracker.Context
     {
         public ExpenseTrackerContext() : base("ExpenseTrackerConnection")
         {
-
+            Database.SetInitializer(new ExpenseTrackerInitializer());
         }
 
         public DbSet<Budget> Budgets { get; set; }
