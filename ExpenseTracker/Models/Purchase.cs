@@ -9,10 +9,19 @@ namespace ExpenseTracker.Models
     public class Purchase
     {
         public int PurchaseId { get; set; }
+
+        [Required]
         public int BudgetId { get; set; }
+
+        [Required]
         public int CategoryId { get; set; }
+
+        [Required]
+        [Range(0.05, 1000, ErrorMessage = "Cost must be between 0.05$ to 1000$ inclusively")]
         public decimal Cost { get; set; }
 
+        [Required]
+        [DataType(DataType.Date, ErrorMessage = "The date must have the following format : dd/MM/yyyy")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:dd\/MM\/yyyy}")]
         public DateTime Date { get; set; }
 

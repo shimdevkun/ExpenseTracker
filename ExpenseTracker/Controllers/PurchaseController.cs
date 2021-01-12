@@ -26,8 +26,31 @@ namespace ExpenseTracker.Controllers
             purchase.BudgetId = budget.BudgetId;
             purchase.Date = date;
 
-            ViewBag.CategoryId = new SelectList(db.Categories.Select(c => c.CategoryName));
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.ItemId = new MultiSelectList(db.Items, "ItemId", "ItemName");
+
             return View(purchase);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Purchase purchase, List<int> itemId)
+        {
+            if (itemId == null || itemId.Count == 0)
+                ModelState.AddModelError("Items", "The purchase must have a minimum of one item");
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = db.Categories.ToList();
+                ViewBag.ItemId = new MultiSelectList(db.Items, "ItemId", "ItemName");
+                return View(purchase);
+            }
+
+
+            purchase.Items = db.Items.Where(i => itemId.Contains(i.ItemId)).ToList();
+            db.Purchases.Add(purchase);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
