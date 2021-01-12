@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,8 @@ namespace ExpenseTracker.Models
     public class Category
     {
         public int CategoryId { get; set; }
+
+        [DisplayName("Category")]
         public string CategoryName { get; set; }
 
         public virtual ICollection<Purchase> Purchases { get; set; }
