@@ -12,8 +12,12 @@ namespace ExpenseTracker.Controllers
     public class PurchaseController : Controller
     {
         private ExpenseTrackerContext db = new ExpenseTrackerContext();
-
-        // GET: Purchase
+        public ActionResult Index()
+        {
+            var purchases = db.Purchases.OrderByDescending(p => p.Date).ToList();
+            return View(purchases);
+        }
+       
         public ActionResult Create()
         {
             DateTime date = DateTime.Now;
@@ -50,7 +54,7 @@ namespace ExpenseTracker.Controllers
             db.Purchases.Add(purchase);
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
     }
 }

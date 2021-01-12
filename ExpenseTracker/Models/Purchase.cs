@@ -21,7 +21,7 @@ namespace ExpenseTracker.Models
         public decimal Cost { get; set; }
 
         [Required]
-        [DataType(DataType.Date, ErrorMessage = "The date must have the following format : dd/MM/yyyy")]
+        [DataType(DataType.DateTime, ErrorMessage = "The date must have the following format : dd/MM/yyyy")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:dd\/MM\/yyyy}")]
         public DateTime Date { get; set; }
 
