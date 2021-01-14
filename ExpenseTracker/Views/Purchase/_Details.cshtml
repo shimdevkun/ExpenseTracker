@@ -1,0 +1,15 @@
+﻿@using System.Globalization;
+@using ExpenseTracker.Models
+@model ExpenseTracker.ViewModels.PurchaseDetailsVM
+
+
+<h4>@Html.DisplayNameFor(model => model.Budget)</h4>
+<p>@Model.Budget.StartDate.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture) to @Model.Budget.EndDate.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture)</p>
+<h4>Items: </h4>
+<ul>
+
+    @foreach (Item item in Model.Items)
+    {
+        <li>@item.ItemName</li>
+    }
+</ul>

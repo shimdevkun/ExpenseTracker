@@ -2,44 +2,125 @@
 
 @{
     ViewBag.Title = "Index";
+    AjaxOptions ajax = new AjaxOptions();
+    ajax.HttpMethod = "GET";
+    ajax.OnSuccess = "displayRow";
 }
+<style>
+    .table-header {
+        font-weight: bold;
+    }
+
+    .table-header,
+    .table-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .table-header div{
+        background: #a3b9e6;
+    }
+
+    .table-header div + div {
+        border-left: 1px solid #d4ddef;
+    }
+
+    .table-header div,
+    .table-row div {
+        width: 25%;
+        padding: 1em;
+    }
+
+    .table-row div {
+        border: 1px solid #a3b9e6;
+        border-top: none;
+        border-right: none;
+    }
+
+    .table-row div:last-child {
+        border-right: 1px solid #a3b9e6;
+    }
+
+    ul {
+        padding-left:1em;
+    }
+
+    .details {
+        padding: 1em;
+        background: #f7f7f7;
+        border: 1px solid #a3b9e6;
+        border-top: none;
+    }
+</style>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script>
+    var pId;
+    function displayRow(res) {
+        $("#purchase-" + pId).css("display", "block");
+        $("#purchase-" + pId).html(res);
+        $("#link-" + pId).next().css("display", "block");
+        $("#link-" + pId).css("display", "none");
+    }
+
+    function setShowState(id) {
+        if (pId != undefined)
+            toggle();
+        pId = id;
+    }
+
+    function toggle() {
+        $("#purchase-" + pId).html("");
+        $("#link-" + pId).css("display", "block");
+        $("#link-" + pId).next().css("display", "none");
+        $("#purchase-" + pId).css("display", "none");
+    }
+</script>
 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
+
+<div class="table">
+    <div class="table-header">
+        <div>
             @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </th>
-        <th>
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.Cost)
-        </th>
-        <th>
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th></th>
-    </tr>
+        </div>
+        <div></div>
+    </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PurchaseId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PurchaseId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PurchaseId })
-        </td>
-    </tr>
-}
-
-</table>
+    @foreach (var item in Model)
+    {
+        <div>
+            <div class="table-row">
+                <div>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </div>
+                <div>
+                    @Ajax.ActionLink("View details", "Details", new { id = item.PurchaseId }, ajax, new { onClick = "setShowState(" + item.PurchaseId + ");", id = "link-" + item.PurchaseId })
+                    <a style="display:none;" onclick="toggle()">Hide details</a>
+                </div>
+            </div>
+            <div class="details" id="purchase-@item.PurchaseId" style="display:none;">
+            </div>
+        </div>   
+    }
+</div>

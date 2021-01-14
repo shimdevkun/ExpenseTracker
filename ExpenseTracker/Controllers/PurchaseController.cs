@@ -1,5 +1,6 @@
 ﻿using ExpenseTracker.Context;
 using ExpenseTracker.Models;
+using ExpenseTracker.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -55,6 +56,19 @@ namespace ExpenseTracker.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int id)
+        {
+            var purchase = db.Purchases.Find(id);
+            if (purchase == null)
+                throw new ArgumentNullException();
+
+            var vm = new PurchaseDetailsVM();
+            vm.Budget = purchase.Budget;
+            vm.Items = purchase.Items;
+
+            return PartialView("_Details", vm);
         }
     }
 }
