@@ -1,0 +1,52 @@
+﻿a {
+    cursor: pointer;
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+.table-header,
+.table-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-header div {
+background: #a3b9e6;
+}
+
+.table-header div + div {
+    border-left: 1px solid #d4ddef;
+}
+
+.table-header div,
+.table-row div {
+    width: 25%;
+    padding: 1em;
+}
+
+.table-row div {
+    border: 1px solid #a3b9e6;
+    border-top: none;
+    border-right: none;
+}
+
+.table-row div:last-child {
+    border-right: 1px solid #a3b9e6;
+}
+
+ul {
+    padding-left: 1em;
+}
+
+.details {
+    padding: 1em;
+    background: #f7f7f7;
+    border: 1px solid #a3b9e6;
+    border-top: none;
+}
+
+.details.hidden {
+    display:none;
+}
